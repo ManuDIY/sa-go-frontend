@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Pre-Build') {
             steps {
-                gitlabCommitStatus(name: 'NPM install'){
+                gitlabCommitStatus(name: 'Go env'){
                     rocketSend(
                         attachments: [[
                             title: "${env.gitlabSourceRepoName}",
@@ -42,8 +42,10 @@ pipeline {
         }
         stage('Build') {
             steps {
-                gitlabCommitStatus(name: 'NPM build'){
-                    sh "CGO_ENABLED=0 GOOS=linux GOARCH=amd64 /home/jenkins/go/bin/go build -a -installsuffix cgo -ldflags="-w -s""
+                gitlabCommitStatus(name: 'Go build'){
+                    sh '''
+                    CGO_ENABLED=0 GOOS=linux GOARCH=amd64 /home/jenkins/go/bin/go build -a -installsuffix cgo -ldflags="-w -s"
+                    '''
                 }
             }
         }
