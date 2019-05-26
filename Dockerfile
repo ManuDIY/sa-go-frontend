@@ -1,5 +1,4 @@
-FROM scratch
-COPY index.html /
-COPY sa-go-grontend /
-CMD [/sa-go-grontend]
-
+FROM alpine
+COPY ./index.html /
+COPY ./sa-go-frontend /
+CMD ["/sa-go-frontend"]
