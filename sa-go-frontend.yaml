@@ -34,7 +34,7 @@ metadata:
     env: production
   name: sa-go-frontend
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
       env: production
