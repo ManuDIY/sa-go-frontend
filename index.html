@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Frontend</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script>
+    $(document).ready(function () {
+            $('#myWish').click(function () {
+                text = $.trim($("#feedback").val());
+                if (text != "") {
+                formData = { sentence: text  };
+                $.ajax({
+                    type: "POST",
+                    url: "http://192.168.137.204/sentiment",
+                    data: JSON.stringify(formData),
+                    success: function (data) { 
+                            value = data.polarity
+                            red = 155 - (value * 100);
+                            green = 155 + (value * 100);
+                            $("#output").css({"background-color": "rgb("+red+","+green+",0)"})
+                            $("#output").html("Sentence: \""+data.sentence + "\"<br>Polarity: "+ data.polarity);
+                        },
+                    dataType: "json",
+                    contentType: "application/json"
+                });
+                } else {
+                    $("#output").html("");
+                }
+            });
+        });
+     </script>
+</head>
+
+<body>
+
+    <div class="jumbotron text-center">
+        <h1>Application V1</h1>
+        <p>Simple frontend in bootstrap</p>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <form>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" >Your feedback</span>
+                            </div>
+                            <textarea class="form-control" aria-label="With textarea" id="feedback"></textarea>
+                        </div>
+                    </div>
+                    <div class="float-sm-right">
+                    <input class="btn btn-primary" type="button" value="Submit" id="myWish">
+                    </div><br>
+                </form>
+
+            </div>
+            <div class="col-sm-4">
+                <div id="output">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+</html>
