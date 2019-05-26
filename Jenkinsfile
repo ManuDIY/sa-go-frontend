@@ -37,14 +37,13 @@ pipeline {
                         rawMessage: true
                     )
                     sh "env"
-                    sh "npm install"
                 }
             }
         }
         stage('Build') {
             steps {
                 gitlabCommitStatus(name: 'NPM build'){
-                    sh "REACT_APP_API_URL=http://sa-app.linxlabs.com npm run build"
+                    sh "CGO_ENABLED=0 GOOS=linux GOARCH=amd64 /home/jenkins/go/bin/go build -a -installsuffix cgo -ldflags="-w -s""
                 }
             }
         }
