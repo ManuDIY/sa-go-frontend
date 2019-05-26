@@ -20,7 +20,7 @@ spec:
   ports:
   - port: 80
     protocol: TCP
-    targetPort: 80
+    targetPort: 8090
   selector:
     run: sa-go-frontend
   type: LoadBalancer
@@ -50,6 +50,6 @@ spec:
       - image: SA_FRONTEND_CONTAINER_IMAGE
         name: sa-go-frontend
         ports:
-        - containerPort: 80
+        - containerPort: 8090
       imagePullSecrets:
       - name: regcred
